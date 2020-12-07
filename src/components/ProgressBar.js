@@ -4,7 +4,7 @@ function ProgressBar(props) {
     const divRef = useRef(0);
     useEffect(() => {
         for (let i = 0; i < divRef.current.children.length; i++) {
-            i == props.active
+            i === props.active
                 ? divRef.current.children[i].classList.add("active")
                 : divRef.current.children[i].classList.add("inactive");
         }

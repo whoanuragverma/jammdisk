@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Modal, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ProgressBar from "./ProgressBar";
@@ -8,6 +8,14 @@ function UsbPage() {
     const [buttonClass, setButtonClass] = useState("dark");
     const [errorMsg, setError] = useState("");
     const [format, setFormat] = useState("Yes, format");
+    useEffect(() => {
+        const dirHandle = window.dirHandle;
+        if (dirHandle) {
+            setButtonClass("dark");
+            setButtonValue("USB Mounted");
+            setError("");
+        }
+    }, []);
     async function showFilePicker() {
         try {
             const dirHandle = await window.showDirectoryPicker();
@@ -50,7 +58,7 @@ function UsbPage() {
         }
     }
     return (
-        <Container fluid className="d-none d-lg-block hc-100 p-5">
+        <Container fluid className="  hc-100 p-0">
             <Modal show={checked} centered>
                 <Modal.Header>
                     <h3>This Pendrive is not empty!</h3>
@@ -70,15 +78,15 @@ function UsbPage() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <div className="p-5 rounded border shadow h-100">
+            <div className="p-5  h-100">
                 <Row className="p-1">
                     <Col>
                         <ProgressBar active={0} />
                     </Col>
                 </Row>
                 <div className="row d-flex align-items-center">
-                    <Col className="d-flex flex-column" lg={6}>
-                        <span className="p-3">
+                    <Col className="d-flex flex-column" xs={12} lg={6}>
+                        <span className="p-3 pt-5">
                             Plug in your USB
                             <br />
                             Click on Select USB below and navigate to USB in the
@@ -99,7 +107,7 @@ function UsbPage() {
                             </button>
                         </span>
                     </Col>
-                    <Col lg={6}>
+                    <Col className="pt-5 d-lg-block d-none">
                         <Image
                             src="https://i.giphy.com/media/K25PVRA032Ues/source.gif"
                             alt="How to not plug in USB"
@@ -113,25 +121,27 @@ function UsbPage() {
                 </div>
                 <Row>
                     <Col lg={12} className="d-flex justify-content-center p-3">
-                        <button className="btn btn-light m-2" disabled>
-                            Previous
-                        </button>
-                        <button
-                            className="btn btn-dark m-2"
-                            disabled={
-                                buttonValue === "USB Mounted" ? false : true
+                        <Link to="/">
+                            <button className="btn btn-light m-2">
+                                Previous
+                            </button>
+                        </Link>
+                        <Link
+                            to={
+                                buttonValue === "USB Mounted"
+                                    ? "/choose"
+                                    : "/usb"
                             }
                         >
-                            <Link
-                                to={
-                                    buttonValue === "USB Mounted"
-                                        ? "/choose"
-                                        : "/usb"
+                            <button
+                                className="btn btn-dark m-2"
+                                disabled={
+                                    buttonValue === "USB Mounted" ? false : true
                                 }
                             >
                                 Next
-                            </Link>
-                        </button>
+                            </button>
+                        </Link>
                     </Col>
                 </Row>
             </div>

@@ -8,6 +8,7 @@ function InfoPage() {
     function hide() {
         return history.push("/");
     }
+
     return (
         <React.Fragment>
             <HomePage />

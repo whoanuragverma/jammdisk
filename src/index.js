@@ -6,6 +6,8 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import InfoPage from "./components/InfoPage";
 import UsbPage from "./components/UsbPage";
+import ChoosePage from "./components/ChoosePage";
+import UnSupported from "./components/unsupported";
 ReactDOM.render(
     <React.StrictMode>
         <Router>
@@ -18,6 +20,12 @@ ReactDOM.render(
                 </Route>
                 <Route path="/usb">
                     <UsbPage />
+                </Route>
+                <Route path="/choose">
+                    <ChoosePage />
+                </Route>
+                <Route path="/unsupported">
+                    <UnSupported />
                 </Route>
             </Switch>
         </Router>

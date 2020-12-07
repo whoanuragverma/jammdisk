@@ -22,13 +22,16 @@ export default function HomePage() {
 
     return (
         <Container
-            fluid
-            className="hc-100 d-none d-lg-block"
             onMouseMove={mouseMove}
+            style={{ height: "100vh", width: "100vw" }}
         >
             <Row className="h-100">
-                <Col className="d-flex justify-content-center align-items-center flex-column p-3">
-                    <div className="p-5">
+                <Col
+                    className="d-flex justify-content-center align-items-center flex-column p-3"
+                    xs={12}
+                    lg={6}
+                >
+                    <div>
                         <p className="h2">
                             Like Music?
                             <br /> Need something for road trip?
@@ -76,7 +79,11 @@ export default function HomePage() {
                         </div>
                     </div>
                 </Col>
-                <Col className="d-flex justify-content-center align-items-center">
+                <Col
+                    className="d-flex justify-content-center align-items-center"
+                    xs={12}
+                    lg={6}
+                >
                     <Image
                         src={BackGroundImg}
                         className="w-100"
