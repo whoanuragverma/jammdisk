@@ -7,7 +7,7 @@ function Cards() {
     const [total, setTotal] = useState(window.__total_selected__ || 0);
     useEffect(() => {
         itemsRef.current = itemsRef.current.slice(0, list.length);
-    }, [list.length]);
+    }, []);
     if (!window.__selected__) {
         window.__selected__ = [];
         window.__total_selected__ = 0;

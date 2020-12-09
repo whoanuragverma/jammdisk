@@ -174,6 +174,8 @@ function Search() {
                 case "Song":
                     base += "song";
                     break;
+                default:
+                    base += "autocomplete";
             }
             base += `?query=${inputRef.current.value}`;
             fetch(base)
