@@ -9,7 +9,7 @@ function UsbPage() {
     const [errorMsg, setError] = useState("");
     const [format, setFormat] = useState("Yes, format");
     useEffect(() => {
-        const dirHandle = window.dirHandle;
+        const dirHandle = window.__dirHandle__;
         if (dirHandle) {
             setButtonClass("dark");
             setButtonValue("USB Mounted");
@@ -19,7 +19,7 @@ function UsbPage() {
     async function showFilePicker() {
         try {
             const dirHandle = await window.showDirectoryPicker();
-            window.dirHandle = dirHandle;
+            window.__dirHandle__ = dirHandle;
             setButtonClass("dark");
             setButtonValue("USB Mounted");
             setError("");
@@ -41,7 +41,7 @@ function UsbPage() {
         setFormat("Click Save Changes");
         try {
             setFormat("Formatting");
-            const dirHandle = window.dirHandle;
+            const dirHandle = window.__dirHandle__;
             for await (const entry of dirHandle.values()) {
                 if (entry.kind === "directory") {
                     await dirHandle.removeEntry(entry.name, {

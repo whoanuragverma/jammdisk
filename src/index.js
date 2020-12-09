@@ -8,6 +8,7 @@ import InfoPage from "./components/InfoPage";
 import UsbPage from "./components/UsbPage";
 import ChoosePage from "./components/ChoosePage";
 import UnSupported from "./components/unsupported";
+import Search from "./components/search";
 ReactDOM.render(
     <React.StrictMode>
         <Router>
@@ -23,6 +24,9 @@ ReactDOM.render(
                 </Route>
                 <Route path="/choose">
                     <ChoosePage />
+                </Route>
+                <Route path="/search">
+                    <Search />
                 </Route>
                 <Route path="/unsupported">
                     <UnSupported />

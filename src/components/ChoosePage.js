@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import ProgressBar from "./ProgressBar";
 import Cards from "./Cards";
 function ChoosePage() {
-    const dirHandle = window.dirHandle;
+    const dirHandle = window.__dirHandle__;
 
     if (!dirHandle) {
         return <Redirect to="/usb" />;
