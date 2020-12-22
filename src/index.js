@@ -8,6 +8,7 @@ import InfoPage from "./components/InfoPage";
 import UsbPage from "./components/UsbPage";
 import ChoosePage from "./components/ChoosePage";
 import UnSupported from "./components/unsupported";
+import DownLoad from "./components/download";
 import Search from "./components/search";
 import ProcessResults from "./components/ProcessResults";
 ReactDOM.render(
@@ -34,6 +35,9 @@ ReactDOM.render(
                 </Route>
                 <Route path="/unsupported">
                     <UnSupported />
+                </Route>
+                <Route path="/download">
+                    <DownLoad />
                 </Route>
             </Switch>
         </Router>

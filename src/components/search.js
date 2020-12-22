@@ -189,7 +189,7 @@ function Search() {
                                     item.url ||
                                         `song/` +
                                             btoa(
-                                                `${item["media"]["low"]}~${item["image"]["500x500"]}~${item["title"]}`
+                                                `${item["media"]["low"]}~${item["image"]["500x500"]}~${item["title"]}~${item["album"]}~${item["artists"][0]["name"]}`
                                             )
                                 )}
                                 onClick={() => toggleSelect(i)}
@@ -197,7 +197,7 @@ function Search() {
                                     item.url ||
                                     `song/` +
                                         btoa(
-                                            `${item["media"]["low"]}~${item["image"]["500x500"]}~${item["title"]}`
+                                            `${item["media"]["low"]}~${item["image"]["500x500"]}~${item["title"]}~${item["album"]}~${item["artists"][0]["name"]}`
                                         )
                                 }
                             >
