@@ -70,13 +70,13 @@ function DownLoad() {
                 }}
                 id="bnr2"
                 className="d-flex justify-content-center align-items-center flex-column"
-                onClick={() => {
+                onDoubleClick={() => {
                     document.querySelector("#main").style.filter = "";
                     document.querySelector("#bnr2").style.top = "-99999999px";
                     dd();
                 }}
             >
-                <h3>Tap anywhere to start the download.</h3>
+                <h3>Double Click anywhere to start the download.</h3>
                 <small>Make sure to allow any pending permissions.</small>
             </div>
             <Container
