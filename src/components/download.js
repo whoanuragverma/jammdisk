@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import React from "react";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 
 function DownLoad() {
-    const [current, setCurrent] = useState(0);
-    const [currentDownload, setCurrentDownload] = useState({
-        image: "",
-        media: "",
-        author: "",
-        album: "",
-    });
     async function queueAsyncFns(fns) {
         const values = [];
 
@@ -25,57 +18,104 @@ function DownLoad() {
 
         return values;
     }
+
+    const download = async (el, idx) =>
+        await fetch(`https://cdn-jammin.herokuapp.com/${el.media}`)
+            .then((response) => response.blob())
+            .then(async (response) => {
+                const newFile = await window.__dirHandle__.getFileHandle(
+                    `${el.title}.mp3`,
+                    { create: true }
+                );
+                const newFileW = await newFile.createWritable();
+                await newFileW.write(response);
+                await newFileW.close();
+                document.querySelector(
+                    "#bnr"
+                ).src = `https://cdn-jammin.herokuapp.com/${el["image"]}`;
+                document.querySelector("#tt").innerHTML = el["title"];
+                document.querySelector("#au").innerHTML = el["author"];
+                document.querySelector("#al").innerHTML = el["album"];
+                document.querySelector("#idx").innerHTML = idx;
+            })
+            .then(() => console.log("Downloaded one song."));
     function dd() {
-        window.__unrolled__.map(async (el) => {
-            const newFile = await window.__dirHandle__.getFileHandle(
-                `${el.title}.mp3`,
-                { create: true }
-            );
-            await fetch(`https://cdn-jammin.herokuapp.com/${el.media}`)
-                .then((response) => response.blob())
-                .then(async (response) => {
-                    const newFileW = await newFile.createWritable();
-                    await newFileW.write(response);
-                    await newFileW.close();
-                    setCurrentDownload(el);
-                    setCurrent(current + 1);
-                });
-        });
+        queueAsyncFns(
+            window.__unrolled__.map((el, idx) => () => download(el, idx))
+        );
     }
+    // {
+    //
+    //     await fetch(`https://cdn-jammin.herokuapp.com/${el.media}`)
+    //         .then((response) => response.blob())
+    //         .then(async (response) => {
+    //             const newFileW = await newFile.createWritable();
+    //             await newFileW.write(response);
+    //             await newFileW.close();
+    //         });
+    // });
+    // }
     if (!window.__unrolled__) return <Redirect to="/usb" />;
     return (
-        <Container className="d-flex justify-content-center align-items-center container flex-column">
-            <Row className="mt-5 pt-5 m-4 p-2">
-                <Col>
-                    <h2>Downloading your favourite songs</h2>
-                </Col>
-                <Button
-                    onClick={() => {
-                        alert("hi");
-                        dd();
-                    }}
-                >
-                    Start
-                </Button>
-            </Row>
-            <Row>
-                <Col className="mr-5">
-                    <Image
-                        src={`https://cdn-jammin.herokuapp.com/${currentDownload["image"]}`}
-                        width="300px"
-                    />
-                </Col>
-                <Col className="ml-5 col d-flex flex-column justify-content-center">
-                    <h5>{currentDownload["title"]}</h5>
-                    <h6>{currentDownload["album"]}</h6>
-                    <h6>{currentDownload["author"]}</h6>
-                    <small>
-                        Downloading {current + 1} out of{" "}
-                        {window.__unrolled__.length}
-                    </small>
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <div
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100vw",
+                    height: "100vh",
+                    color: "#000000",
+                    zIndex: 99,
+                }}
+                id="bnr2"
+                className="d-flex justify-content-center align-items-center flex-column"
+                onClick={() => {
+                    document.querySelector("#main").style.filter = "";
+                    document.querySelector("#bnr2").style.top = "-99999999px";
+                    dd();
+                }}
+            >
+                <h3>Tap anywhere to start the download.</h3>
+                <small>Make sure to allow any pending permissions.</small>
+            </div>
+            <Container
+                className="d-flex justify-content-center align-items-center container flex-column"
+                style={{ filter: "blur(12px)" }}
+                id="main"
+            >
+                <Row className="mt-5 pt-5 m-4 p-2">
+                    <Col>
+                        <h2>Downloading your favourite songs</h2>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Image
+                            src={`https://cdn-jammin.herokuapp.com/${window.__unrolled__[0]["image"]}`}
+                            width="300px"
+                            id="bnr"
+                            style={{
+                                boxShadow:
+                                    "10px 11px 12px 3px rgba(0,0,0,.175)",
+                            }}
+                        />
+                    </Col>
+                    <Col
+                        className="col d-flex flex-column justify-content-center"
+                        style={{ width: "50vw" }}
+                    >
+                        <h5 id="tt">{window.__unrolled__[0]["title"]}</h5>
+                        <h6 id="al">{window.__unrolled__[0]["album"]}</h6>
+                        <h6 id="au">{window.__unrolled__[0]["author"]}</h6>
+                        <small>
+                            Downloaded <span id="idx">0</span> out of{" "}
+                            {window.__unrolled__.length}
+                        </small>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     );
 }
 
