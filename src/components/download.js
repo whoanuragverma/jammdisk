@@ -21,7 +21,7 @@ function DownLoad() {
 
     const download = async (el, idx) => {
         const newFile = await window.__dirHandle__.getFileHandle(
-                    `${el.title}.mp3`,
+                    `${el.title}.m4a`,
                     { create: true }
                 );
         return await fetch(`https://cdn-jammin.herokuapp.com/${el.media}`)
