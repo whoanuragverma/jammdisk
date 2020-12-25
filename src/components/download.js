@@ -19,14 +19,14 @@ function DownLoad() {
         return values;
     }
 
-    const download = async (el, idx) =>
-        await fetch(`https://cdn-jammin.herokuapp.com/${el.media}`)
-            .then((response) => response.blob())
-            .then(async (response) => {
-                const newFile = await window.__dirHandle__.getFileHandle(
+    const download = async (el, idx) => {
+        const newFile = await window.__dirHandle__.getFileHandle(
                     `${el.title}.mp3`,
                     { create: true }
                 );
+        return await fetch(`https://cdn-jammin.herokuapp.com/${el.media}`)
+            .then((response) => response.blob())
+            .then(async (response) => {
                 const newFileW = await newFile.createWritable();
                 await newFileW.write(response);
                 await newFileW.close();
@@ -39,6 +39,7 @@ function DownLoad() {
                 document.querySelector("#idx").innerHTML = idx;
             })
             .then(() => console.log("Downloaded one song."));
+}
     function dd() {
         queueAsyncFns(
             window.__unrolled__.map((el, idx) => () => download(el, idx))
